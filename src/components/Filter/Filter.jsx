@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 
 import './Filter.module.css';
 
- const Filter = ({ filter, onChange }) => (
-    <div>
-      Find contacts by name
-    <label>
-      <input type="text" placeholder="Contacts name" value={filter} onChange={onChange} />
-    </label>
-    </div>
+const Filter = ({ value, onChange }) => {
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+      placeholder="Search contacts..."
+    />
   );
+};
 
-  Filter.propTypes = {
-    filter: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-  };
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
-
-  export default Filter;
+export default Filter;

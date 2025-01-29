@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 import './ContactForm.module.css';
 
@@ -14,25 +15,40 @@ export class ContactForm extends Component {
 
     handleSubmit = event => {
       event.preventDefault();
-      this.props.onAddContact(this.state.name, this.state.number);
+      const { name, number } = this.state;
+
+      // Validare: Numele trebuie să conțină doar litere și spații, minim 3 caractere
+      const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]{3,}$/;
+      if (!nameRegex.test(name)) {
+        Notiflix.Notify.failure("The name must contain only letters and spaces (minimum 3 characters).");
+        return;
+      }
+
+      // Validare: Numărul trebuie să înceapă cu + și să conțină doar cifre (minim 8)
+      const phoneRegex = /^\+\d{8,}$/;
+      if (!phoneRegex.test(number)) {
+        Notiflix.Notify.failure("The phone number must start with '+' and contain only digits (minimum 8).");
+        return;
+      }
+
+      this.props.onSubmit({ name, number });
       this.setState({ name: '', number: '' });
     };
 
+
     render() {
-      const { name, number } = this.state;
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
             Name
             <input
-              type="text"
-              name="name"
-              placeholder="Enter name"
-              pattern="^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces."
-              required
-              value={name}
-              onChange={this.handleChange}
+             type="text"
+             name="name"
+             value={this.state.name}
+             onChange={this.handleChange}
+             pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]{3,}"
+             placeholder="Enter name"
+             required
             />
           </label>
           <label>
@@ -40,13 +56,12 @@ export class ContactForm extends Component {
             <input
               type="tel"
               name="number"
-              placeholder="Enter phone number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={number}
+              value={this.state.number}
               onChange={this.handleChange}
-            />
+              pattern="\+\d{8,}"
+              placeholder="+12345678"
+              required
+             />
           </label>
           <button type="submit">Add Contact</button>
         </form>
@@ -55,7 +70,7 @@ export class ContactForm extends Component {
   }
 
   ContactForm.propTypes = {
-    onAddContact: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   };
 
   export default ContactForm;
