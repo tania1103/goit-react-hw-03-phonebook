@@ -1,0 +1,31 @@
+div{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 5px;
+  text-align: center;
+  font-family: Dancing Script;
+  font-size: 25px;
+}
+
+input{
+  font-size: 20px;
+  height: 35px;
+  width: 50%;
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 2px solid #e9b90a;
+  border-radius: 5px;
+  font-weight: 500;
+  &:hover {
+    border: 2px solid #2b240c;
+}
+}
+
+label{
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #2b240c;
+
+}

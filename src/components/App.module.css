@@ -1,0 +1,21 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  font-family: Dancing Script;
+  font-size: 40px;
+  color: #5e1414;
+}
+
+h2 {
+  font-family: Dancing Script;
+  font-size: 30px;
+  text-align:center;
+  color: #5e1414;
+}
+
+.container {
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 10px;}
